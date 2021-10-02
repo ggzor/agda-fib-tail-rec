@@ -39,3 +39,21 @@ same-fib 1 (s≤s ())
 same-fib (suc (suc n)) (s≤s (s≤s z≤n)) with prop-2-1 n n ≤-refl
 ... | prop-n-2 rewrite n∸n≡0 n = prop-n-2
 
+open import Agda.Builtin.IO
+open import Agda.Builtin.Unit
+open import Agda.Builtin.String
+open import Agda.Builtin.Char
+open import Data.List
+
+postulate
+  putStrLn : List Char → IO ⊤
+postulate
+  show : ℕ → List Char
+
+{-# COMPILE GHC putStrLn = Prelude.putStrLn #-}
+
+{-# COMPILE GHC show = Prelude.show #-}
+
+main : IO ⊤
+main = putStrLn (show (itero 10_000_000 0 1 (s≤s (s≤s z≤n))))
+
